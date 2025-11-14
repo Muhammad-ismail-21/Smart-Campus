@@ -15,7 +15,7 @@ bool isKleEmail(String email) => email.trim().toLowerCase().endsWith('@kletech.a
 
 class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateMixin {
   late final TabController _tabController;
-  final _emailController = TextEditingController();
+  final _usnController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _loading = false;
@@ -30,7 +30,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
   @override
   void dispose() {
     _tabController.dispose();
-    _emailController.dispose();
+    _usnController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -40,14 +40,9 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final email = _emailController.text.trim();
+    final usn = _usnController.text.trim().toLowerCase();
+    final email = '$usn@kletech.ac.in';
     final password = _passwordController.text;
-
-    // 🔐 HARD GUARD: absolutely block non-KLE emails before Firebase call
-    if (!isKleEmail(email)) {
-      setState(() => _error = 'Only @kletech.ac.in emails are allowed.');
-      return;
-    }
 
     setState(() {
       _loading = true;
@@ -129,18 +124,16 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
                   ),
                 ),
               TextFormField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
+                controller: _usnController,
+                keyboardType: TextInputType.text,
+                autocorrect: false,
                 decoration: const InputDecoration(
-                  labelText: 'College Email',
-                  hintText: 'yourname@kletech.ac.in',
-                  prefixIcon: Icon(Icons.email_outlined),
+                  labelText: 'USN',
+                  hintText: 'e.g., 01fe21bcs001',
+                  prefixIcon: Icon(Icons.badge_outlined),
                 ),
                 validator: (v) {
-                  final value = (v ?? '').trim();
-                  if (value.isEmpty) return 'Please enter your email';
-                  if (!value.contains('@')) return 'Please enter a valid email';
-                  if (!isKleEmail(value)) return 'Only @kletech.ac.in email is allowed';
+                  if (v == null || v.trim().isEmpty) return 'Please enter your USN';
                   return null;
                 },
               ),

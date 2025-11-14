@@ -76,16 +76,20 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SizedBox(height: 12),
-            ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, authRoute),
+            ElevatedButton.icon(
+              onPressed: () => Navigator.pushNamed(context, roleSelectionRoute),
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 textStyle: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
+                // Make the icon appear at the end of the button
+                foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                backgroundColor: Theme.of(context).colorScheme.primary,
               ),
-              child: const Text('Sign In / Create Account'),
+              label: const Text('Get started'),
+              icon: const Icon(Icons.arrow_forward),
             ),
             const Spacer(flex: 1),
           ],

@@ -8,3 +8,5 @@ const String attendanceRoute = '/attendance';
 const String timetableRoute = '/timetable';
 const String announcementsRoute = '/announcements';
 const String examsRoute = '/exams';
+const String facultyWipRoute = '/faculty-wip'; 
+const String roleSelectionRoute = '/role-selection'; 

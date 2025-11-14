@@ -1,16 +1,36 @@
-# hub
+# Nexus — Campus Companion App
 
-A new Flutter project.
+Nexus is a Flutter mobile application built for **KLE Technological University**.  
+It provides campus navigation (tour), user authentication (college-only email), and a simple profile system backed by Firebase.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🧭 Overview
 
-A few resources to get you started if this is your first Flutter project:
+**Primary goals**
+- Provide an interactive campus tour (Indoor / Outdoor modes).
+- Restrict account creation to `@kletech.ac.in` emails.
+- Allow guest usage (anonymous sign-in).
+- Store and show user profiles using Cloud Firestore.
+- Simple, modern Material 3 UI with offline-friendly Firestore streams.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+**Key features**
+- Email / Password authentication (Firebase Auth) with college-domain enforcement.
+- Anonymous (guest) sign-in option.
+- User profile persisted to Firestore and editable from the app.
+- Tour screens with POIs and images (local assets or Firebase Storage).
+- Clean architecture: screens, widgets, services.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## 🏗 Tech stack
+
+- Flutter (Dart) — UI
+- Firebase (Authentication, Firestore, Storage)
+- FlutterFire (firebase_core, firebase_auth, cloud_firestore, firebase_storage)
+- Material 3 design principles
+
+---
+
+## 📁 Project structure (important files)
+

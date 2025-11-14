@@ -58,7 +58,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
       }
 
       if (mounted) {
-        Navigator.pushNamedAndRemoveUntil(context, profileRoute, (route) => false);
+        Navigator.pushNamedAndRemoveUntil(context, dashboardRoute, (route) => false);
       }
     } on FirebaseAuthException catch (e) {
       // Friendly messages

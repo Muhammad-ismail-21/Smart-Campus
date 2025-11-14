@@ -22,8 +22,10 @@ class _HomeScreenState extends State<HomeScreen> {
         FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user != null) {
         // If user is logged in, navigate to profile screen
-        Navigator.pushNamedAndRemoveUntil(
-            context, profileRoute, (route) => false);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) Navigator.pushNamedAndRemoveUntil(
+              context, dashboardRoute, (route) => false);
+        });
       }
     });
   }

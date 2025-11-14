@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:hub/constants.dart';
 import 'package:hub/firebase_options.dart';
 import 'package:hub/screens/auth_screen.dart';
+import 'package:hub/screens/dashboard_screen.dart';
 import 'package:hub/screens/faculty_wip_screen.dart';
 import 'package:hub/screens/feature_page.dart';
 import 'package:hub/screens/home_screen.dart';
-import 'package:hub/screens/profile_screen.dart';
 import 'package:hub/screens/role_selection_screen.dart';
 import 'package:hub/screens/tour_mode_screen.dart';
 
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         roleSelectionRoute: (context) => const RoleSelectionScreen(),
         authRoute: (context) => const AuthScreen(),
         facultyWipRoute: (context) => const FacultyWipScreen(),
-        profileRoute: (context) => const ProfileScreen(),
+        dashboardRoute: (context) => const DashboardScreen(),
         tourModeRoute: (context) => const TourModeScreen(),
         // Placeholder routes for features
         attendanceRoute: (context) => const FeaturePage(title: 'Attendance'),

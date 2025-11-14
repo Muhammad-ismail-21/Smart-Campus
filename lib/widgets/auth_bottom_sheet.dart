@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hub/constants.dart';
 
-// === Step 1: Helper to allow only kletech emails ===
-bool isKleEmail(String email) {
-  return email.trim().toLowerCase().endsWith('@kletech.ac.in');
-}
-
 class AuthBottomSheet extends StatefulWidget {
   const AuthBottomSheet({super.key});
 
@@ -15,7 +10,7 @@ class AuthBottomSheet extends StatefulWidget {
 }
 
 class _AuthBottomSheetState extends State<AuthBottomSheet> {
-  final _email = TextEditingController();
+  final _usnController = TextEditingController();
   final _password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isSignUp = false;
@@ -24,23 +19,17 @@ class _AuthBottomSheetState extends State<AuthBottomSheet> {
 
   @override
   void dispose() {
-    _email.dispose();
+    _usnController.dispose();
     _password.dispose();
     super.dispose();
   }
 
-  // === Step 3: Guard before Firebase call ===
   Future<void> _submit() async {
   if (!_formKey.currentState!.validate()) return;
 
-  final email = _email.text.trim();
+  final usn = _usnController.text.trim().toLowerCase();
+  final email = '$usn@kletech.ac.in';
   final password = _password.text;
-
-  // 🔐 Extra guard (must-have)
-  if (!isKleEmail(email)) {
-    setState(() => _error = 'Only @kletech.ac.in emails are allowed.');
-    return;
-  }
 
   setState(() {
     _loading = true;
@@ -55,7 +44,7 @@ class _AuthBottomSheetState extends State<AuthBottomSheet> {
       await auth.signInWithEmailAndPassword(email: email, password: password);
     }
     if (mounted) {
-      Navigator.pushNamedAndRemoveUntil(context, profileRoute, (route) => false);
+      Navigator.pushNamedAndRemoveUntil(context, dashboardRoute, (route) => false);
     }
   } on FirebaseAuthException catch (e) {
     String message;
@@ -98,7 +87,7 @@ class _AuthBottomSheetState extends State<AuthBottomSheet> {
     try {
       await FirebaseAuth.instance.signInAnonymously();
       if (mounted) {
-        Navigator.pushNamedAndRemoveUntil(context, profileRoute, (route) => false);
+        Navigator.pushNamedAndRemoveUntil(context, dashboardRoute, (route) => false);
       }
     } on FirebaseAuthException catch (e) {
       setState(() => _error = e.message ?? 'Anonymous sign-in failed.');
@@ -165,28 +154,20 @@ class _AuthBottomSheetState extends State<AuthBottomSheet> {
                     ),
                   ),
 
-                // === Step 2: Form with inline validators for immediate feedback ===
                 Form(
                   key: _formKey,
                   child: Column(
                     children: [
                       TextFormField(
-                        controller: _email,
-                        keyboardType: TextInputType.emailAddress,
+                        controller: _usnController,
+                        keyboardType: TextInputType.text,
+                        autocorrect: false,
                         decoration: const InputDecoration(
-                          labelText: 'College Email',
-                          hintText: 'yourname@kletech.ac.in',
-                          prefixIcon: Icon(Icons.email_outlined),
+                          labelText: 'USN',
+                          hintText: 'e.g., 01fe21bcs001',
+                          prefixIcon: Icon(Icons.badge_outlined),
                         ),
-                        validator: (v) {
-                          final value = (v ?? '').trim();
-                          if (value.isEmpty) return 'Enter your email';
-                          if (!value.contains('@')) return 'Enter a valid email';
-                          if (!isKleEmail(value)) { // Domain check
-                            return 'Only @kletech.ac.in email is allowed';
-                          }
-                          return null;
-                        },
+                        validator: (v) => (v == null || v.trim().isEmpty) ? 'Please enter your USN' : null,
                       ),
                       const SizedBox(height: 12),
                       TextFormField(

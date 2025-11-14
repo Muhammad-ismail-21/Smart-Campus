@@ -1,8 +1,8 @@
 // lib/constants.dart
 
 const String homeRoute = '/';
-const String tourModeRoute = '/tour-mode';
-const String profileRoute = '/profile';
+const String tourModeRoute = '/tour';
+const String dashboardRoute = '/dashboard';
 const String authRoute = '/auth';
 const String attendanceRoute = '/attendance';
 const String timetableRoute = '/timetable';

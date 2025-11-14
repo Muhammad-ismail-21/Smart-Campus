@@ -69,6 +69,9 @@ class _AuthBottomSheetState extends State<AuthBottomSheet> {
       case 'wrong-password':
         message = 'Incorrect password. Please try again.';
         break;
+      case 'invalid-credential':
+        message = 'Invalid credentials. Please check your email and password.';
+        break;
       case 'email-already-in-use':
         message = 'An account already exists for that email. Please sign in.';
         break;
